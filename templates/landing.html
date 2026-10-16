@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+{% block title %}MedRemind Care | Medicine reminders and patient care{% endblock %}
+{% block content %}
+<div class="landing-page project-home">
+
+  <!-- FRONT PAGE -->
+  <section class="landing-hero" id="front-page">
+    <div class="hero-copy">
+      <span class="hero-kicker"><span class="status-dot"></span> GROUP PROJECT · MEDICATION CARE SYSTEM</span>
+      <h1>Never miss<br>a <em>dose.</em></h1>
+      <p>MedRemind Care keeps medicine schedules, reminders, doctor visits and client questions in one place, so care stays organised and nothing is forgotten.</p>
+      <div class="hero-actions">
+        <a class="hero-primary" href="{{ url_for('signup') }}">Create a client account <span aria-hidden="true">↗</span></a>
+        <a class="hero-secondary" href="{{ url_for('login') }}">Client sign in</a>
+        <a class="hero-secondary" href="#introduction">Read the project <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-footnote"><span aria-hidden="true">✳</span> Prepared by: [Your name / group members] · [Course and instructor]</div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="visual-glow"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+      <div class="dashboard-mock">
+        <div class="mock-topbar"><div class="mock-brand"><span class="logo-crop mock-logo"><img src="{{ url_for('static', filename='brand/medremind-care-logo.jpg') }}" alt=""></span><b>MedRemind Care</b></div><span class="mock-avatar">A</span></div>
+        <div class="mock-body">
+          <div class="mock-eyebrow">TODAY <span>● LIVE</span></div>
+          <div class="mock-heading">Care overview</div>
+          <div class="mock-stats">
+            <div class="mock-stat"><i class="stat-icon mint-icon">✓</i><span>Doses taken</span><b>Tracked</b></div>
+            <div class="mock-stat"><i class="stat-icon blue-icon">✉</i><span>Questions</span><b>Answered</b></div>
+          </div>
+          <div class="mock-panel">
+            <div class="mock-panel-title">Next appointment <span>This week</span></div>
+            <div class="mock-appointment"><div class="mock-date"><b>15</b><span>OCT</span></div><div><b>Medication review</b><span>With the care team</span></div><span class="mock-arrow">↗</span></div>
+            <div class="mock-line"></div>
+            <div class="mock-schedule"><span class="schedule-check">✓</span><div><b>Morning medicine</b><small>Marked as taken</small></div><span class="schedule-chevron">›</span></div>
+          </div>
+          <div class="mock-bottom"><span>SECURE · PRIVATE</span><span>✦</span></div>
+        </div>
+      </div>
+      <div class="floating-note"><span class="float-check">✓</span><div><b>Reminder sent</b><small>Dose recorded</small></div></div>
+      <span class="visual-sparkle sparkle-one">✳</span><span class="visual-sparkle sparkle-two">✦</span>
+    </div>
+    <div class="hero-index"><span>01</span><i></i><span>FRONT PAGE</span></div>
+  </section>
+
+  <div class="welcome-strip">
+    <span class="strip-star" aria-hidden="true">✳</span>
+    <p><b>Looking for your account?</b> Clients can browse medicines and consult the care team. Staff manage patients from the desktop app and the admin dashboard.</p>
+    <a href="{{ url_for('admin_login') }}">Admin sign in</a>
+  </div>
+
+  <nav class="project-contents" aria-label="Project contents">
+    <span>CONTENTS</span>
+    <div>
+      <a href="#introduction">Introduction</a><a href="#problem">Problem</a><a href="#objectives">Objectives</a>
+      <a href="#scope">Scope</a><a href="#limitations">Limitations</a><a href="#interface">Interface</a>
+      <a href="#dashboard-preview">Dashboard</a><a href="#system-features">Features</a><a href="#benefits">Benefits</a>
+      <a href="#methodology">Methodology</a><a href="#conclusion">Conclusion</a><a href="#flowchart">Flowchart</a><a href="#database-erd">Database</a>
+    </div>
+  </nav>
+
+  <!-- INTRODUCTION -->
+  <section class="project-section intro-section" id="introduction">
+    <div class="project-section-heading"><span class="section-kicker">01 · INTRODUCTION</span><h2>Medication care, <em>made simple.</em></h2></div>
+    <div class="intro-layout">
+      <div class="intro-copy">
+        <p>Missed medicine is one of the most common and most preventable causes of poor treatment results. Patients forget doses, clinics keep scattered paper records, and doctors cannot easily see whether a prescription is being followed.</p>
+        <p><b>MedRemind Care</b> brings these pieces together. A desktop app lets the care team register patients, assign medicines with reminder times and record each dose as taken or missed. This website lets clients browse a medicine library and send consultation questions that the admin answers.</p>
+      </div>
+      <div class="intro-facts">
+        <article><span>PY</span><b>Python and Flask</b><small>Desktop and web, one codebase</small></article>
+        <article><span>DB</span><b>Shared database</b><small>One source of truth for all records</small></article>
+        <article><span>2×</span><b>Two roles</b><small>Administrator and client access</small></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT OF THE PROBLEM -->
+  <section class="project-section problem-section" id="problem">
+    <div class="project-section-heading"><span class="section-kicker">02 · STATEMENT OF THE PROBLEM</span><h2>What goes wrong <em>today.</em></h2>
+      <p>Clinics, caregivers and patients who manage medicine by hand face these problems.</p></div>
+    <div class="problem-grid">
+      <article><span>PROBLEM 01</span><h3>Forgotten doses</h3><p>Patients forget or confuse schedules, leading to missed or doubled doses.</p></article>
+      <article><span>PROBLEM 02</span><h3>Scattered records</h3><p>Patient, medicine and appointment details live on paper or in separate files, so they are easy to lose.</p></article>
+      <article><span>PROBLEM 03</span><h3>No dose history</h3><p>Without a record of taken and missed doses, adherence cannot be measured or reviewed.</p></article>
+      <article><span>PROBLEM 04</span><h3>Unanswered questions</h3><p>Clients have no convenient way to ask about a medicine before seeing a professional.</p></article>
+      <article><span>PROBLEM 05</span><h3>Disconnected visits</h3><p>Appointment dates and doctors are not linked to each patient's medicine plan.</p></article>
+      <article><span>THE QUESTION</span><h3>How can one system help?</h3><p>How can a simple, central system improve medication adherence and make care records easier to manage?</p></article>
+    </div>
+  </section>
+
+  <!-- OBJECTIVES -->
+  <section class="project-section" id="objectives">
+    <div class="project-section-heading"><span class="section-kicker">03 · OBJECTIVES</span><h2>What the project <em>sets out to do.</em></h2></div>
+    <div class="general-objective">
+      <span class="objective-mark" aria-hidden="true">◎</span>
+      <div><small>GENERAL OBJECTIVE</small><p>To develop MedRemind Care, a computerised system that manages patient records, medicine schedules, reminders, appointments and client consultations in one place, with the aim of improving medication adherence and record keeping.</p></div>
+    </div>
+    <div class="specific-objectives">
+      <h3>Specific objectives</h3>
+      <ol>
+        <li><span>01</span><p>Register and manage patient information such as name, age and contact.</p></li>
+        <li><span>02</span><p>Add, update and delete medicines per patient, using a built-in catalog of brands, uses and strengths.</p></li>
+        <li><span>03</span><p>Show timed reminders and let staff mark each dose as Taken or Missed.</p></li>
+        <li><span>04</span><p>Keep a permanent medication history, even if a medicine is later deleted.</p></li>
+        <li><span>05</span><p>Record doctor appointments linked to each patient.</p></li>
+        <li><span>06</span><p>Provide an admin dashboard with totals and consultation activity.</p></li>
+        <li><span>07</span><p>Offer a secure client website with sign-up, login, a medicine library and consultations.</p></li>
+        <li><span>08</span><p>Separate administrator and client roles so each user sees only what they should.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- SCOPE + LIMITATIONS -->
+  <section class="project-section" id="scope">
+    <div class="project-section-heading"><span class="section-kicker">04 · SCOPE OF THE STUDY</span><h2>What the system covers.</h2></div>
+    <div class="scope-grid">
+      <article class="scope-card"><span>IN SCOPE</span><h3>Included</h3>
+        <ul><li>Patient registration and records</li><li>Medicine management with a 13-medicine catalog</li><li>Timed reminders, checked every 30 seconds</li><li>Taken and missed dose history</li><li>Appointment and doctor records</li><li>Client website with consultations and admin replies</li><li>Role-based sign-in with password reset by admin</li></ul></article>
+      <article class="scope-card scope-out"><span>OUT OF SCOPE</span><h3>Not included</h3>
+        <ul><li>Diagnosis or prescribing</li><li>SMS, email or mobile push reminders</li><li>Drug-interaction and allergy checks</li><li>Large hospital networks</li><li>Online payments or pharmacy delivery</li></ul></article>
+    </div>
+  </section>
+
+  <section class="project-section" id="limitations">
+    <div class="project-section-heading"><span class="section-kicker">05 · LIMITATIONS OF THE STUDY</span><h2>Known <em>limits.</em></h2></div>
+    <div class="limitations-note"><b>Please note</b>
+      <p>Reminders appear only while the desktop app is open. The system suits a single clinic or small team. The medicine library is general information and never replaces a doctor or pharmacist; users must follow their prescription and package label. The built-in Flask server is for development, so public use needs HTTPS and a production server.</p></div>
+  </section>
+
+  <!-- INTERFACE PREVIEW -->
+  <section class="project-section" id="interface">
+    <div class="project-section-heading"><span class="section-kicker">06 · CURRENT INTERFACE PREVIEW</span><h2>The sign-in <em>experience.</em></h2></div>
+    <div class="interface-preview-layout">
+      <div class="preview-login-window">
+        <div class="preview-window-bar"><span></span><span></span><span></span><small>CLIENT SIGN IN</small></div>
+        <div class="preview-login-content">
+          <span class="logo-crop preview-brand-mark"><img src="{{ url_for('static', filename='brand/medremind-care-logo.jpg') }}" alt=""></span>
+          <small>YOUR CARE SPACE</small><h3>Client sign in</h3><p>Access the medicine catalog and your requests.</p>
+          <label>Username</label><div class="preview-input">your username</div>
+          <label>Password</label><div class="preview-input">••••••••</div>
+          <div class="preview-login-button"><span>Sign in</span><span>→</span></div>
+          <span class="preview-footnote">Need an account? Create one</span>
+        </div>
+      </div>
+      <div class="interface-details">
+        <span class="preview-index">INTERFACE</span><h3>Simple, calm and clear</h3>
+        <p>Clients and admins sign in on separate pages. Every form is protected, and the layout adapts to phones, tablets and desktops.</p>
+        <div class="interface-module-list"><span>MODULE<b>Client sign in</b></span><span>MODULE<b>Client sign up</b></span><span>MODULE<b>Medicine library</b></span><span>MODULE<b>Consultations</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD PREVIEW -->
+  <section class="project-section" id="dashboard-preview">
+    <div class="project-section-heading"><span class="section-kicker">07 · DASHBOARD PREVIEW</span><h2>The admin <em>overview.</em></h2></div>
+    <div class="dashboard-preview-window">
+      <div class="dashboard-preview-top"><div><span class="logo-crop preview-brand-mark"><img src="{{ url_for('static', filename='brand/medremind-care-logo.jpg') }}" alt=""></span><b>MedRemind Care</b><small>ADMIN</small></div><span class="preview-user">SECURE ADMIN VIEW</span></div>
+      <div class="dashboard-preview-body">
+        <div class="preview-welcome"><div><small>OPERATIONS</small><h3>A clearer view of care activity</h3><p>Client accounts, requests and replies in one place.</p></div>
+          <div class="preview-date">SAMPLE VIEW<br><b>Admin dashboard</b></div></div>
+        <div class="preview-metrics">
+          <div class="preview-stat"><span>CLIENT ACCOUNTS</span><strong>Live count</strong><small>Registered clients</small></div>
+          <div class="preview-stat"><span>ALL REQUESTS</span><strong>Live count</strong><small>Consultation requests</small></div>
+          <div class="preview-stat"><span>NEEDS ATTENTION</span><strong>Live count</strong><small>Pending requests</small></div>
+          <div class="preview-stat"><span>ALERTS</span><strong>Real time</strong><small>New request notice</small></div>
+        </div>
+        <div class="preview-appointments"><div><small>LATEST REQUEST</small><b>Client question</b></div><span>CLIENT</span><span>MEDICINE</span><span>STATUS</span><span>REPLY</span></div>
+        <p class="preview-caption">Admins can search, filter by status, reply to clients and reset client passwords.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYSTEM FEATURES -->
+  <section class="feature-section project-section" id="system-features">
+    <div class="section-heading"><span class="section-kicker">08 · SYSTEM FEATURES</span><h2>Everything care needs, <em>in one place.</em></h2><p>Four connected parts that work from the same shared database.</p></div>
+    <div class="feature-grid">
+      <article class="feature-card feature-card-mint"><div class="feature-card-top"><span class="feature-icon icon-patients">◎</span><span class="feature-number">01</span></div><h3>Patient records</h3><p>Register patients, edit their details and keep every record linked to their medicines and visits.</p>
+        <div class="mini-record"><span class="record-avatar">PT</span><div><b>Patient profile</b><span>Name · age · contact</span></div><span class="record-check">✓</span></div></article>
+      <article class="feature-card feature-card-blue"><div class="feature-card-top"><span class="feature-icon icon-routine">◷</span><span class="feature-number">02</span></div><h3>Medicine reminders</h3><p>Set a reminder time for each medicine. A pop-up appears when it is due, and each dose is marked taken or missed.</p>
+        <div class="routine-visual"><span>08:00</span><i></i><span>Taken</span></div></article>
+      <article class="feature-card"><div class="feature-card-top"><span class="feature-icon icon-visits">▦</span><span class="feature-number">03</span></div><h3>Appointments</h3><p>Record doctor visits and dates for each patient so follow-ups are never missed.</p>
+        <div class="visit-ticket"><div class="ticket-date"><b>15</b><span>OCT</span></div><div><b>Medication review</b><span>Doctor visit</span></div><span class="ticket-star">✦</span></div></article>
+      <article class="feature-card feature-card-dark"><div class="feature-card-top"><span class="feature-icon icon-questions">✉</span><span class="feature-number">04</span></div><h3>Client consultations</h3><p>Clients browse the medicine library and send questions. The admin is alerted live and replies on the same page.</p>
+        <a class="text-link" href="{{ url_for('signup') }}">Try it as a client <span aria-hidden="true">↗</span></a><span class="question-decoration" aria-hidden="true">?</span></article>
+    </div>
+  </section>
+
+  <!-- EXPECTED BENEFITS -->
+  <section class="project-section" id="benefits">
+    <div class="project-section-heading"><span class="section-kicker">09 · EXPECTED BENEFITS</span><h2>Who gains <em>and how.</em></h2></div>
+    <div class="benefit-grid">
+      <article><span>♥</span><h3>Patients</h3><p>Fewer missed doses, easy medicine information and a way to ask questions.</p></article>
+      <article><span>◎</span><h3>Caregivers and admins</h3><p>One place for records and less paperwork.</p></article>
+      <article><span>✚</span><h3>Doctors</h3><p>A clear history showing whether prescriptions were followed.</p></article>
+      <article><span>★</span><h3>The clinic</h3><p>Better organisation, measurable adherence and better quality of care.</p></article>
+    </div>
+  </section>
+
+  <!-- METHODOLOGY -->
+  <section class="project-section" id="methodology">
+    <div class="project-section-heading"><span class="section-kicker">10 · DEVELOPMENT METHODOLOGY</span><h2>Built in <em>small steps.</em></h2><p>The project followed an agile, iterative approach: build a feature, test it, improve it.</p></div>
+    <div class="method-steps">
+      <div class="method-step"><h3>Plan</h3><p>Identify the problem, the users and the core features.</p></div>
+      <div class="method-step"><h3>Design</h3><p>Plan the database tables, desktop tabs and website pages.</p></div>
+      <div class="method-step"><h3>Build</h3><p>Develop module by module: patients, medicines, reminders, history, appointments and web.</p></div>
+      <div class="method-step"><h3>Test and refine</h3><p>Check validation, reminders, logins and roles, then improve.</p></div>
+    </div>
+    <div class="technology-line"><span>PYTHON</span><span>TKINTER</span><span>FLASK</span><span>SQLITE / MYSQL</span><span>HTML · CSS · JAVASCRIPT</span><span>VS CODE</span></div>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section class="project-section conclusion-section" id="conclusion">
+    <div class="conclusion-mark logo-crop"><img src="{{ url_for('static', filename='brand/medremind-care-logo.jpg') }}" alt=""></div>
+    <div><span class="section-kicker">11 · CONCLUSION</span><h2>A calmer way to manage medicine.</h2>
+      <p>MedRemind Care shows that a simple, well-organised system can make medication management more reliable. By joining patient records, reminders, dose tracking, appointments and client consultations, it lowers the chance of missed medicine and gives caregivers and doctors the information they need. Future work could add SMS or email reminders, a mobile app, interaction warnings, charts and exportable reports.</p></div>
+  </section>
+
+  <!-- FLOWCHART -->
+  <section class="project-section diagram-section" id="flowchart">
+    <div class="project-section-heading"><span class="section-kicker">12 · FLOWCHART</span><h2>How the system <em>flows.</em></h2></div>
+    <div class="workflow-chart">
+      <div class="workflow-node workflow-start">Start · open the system</div>
+      <div class="workflow-connector">↓</div>
+      <div class="workflow-node">Sign in or sign up</div>
+      <div class="workflow-connector">↓<small>Valid account?</small></div>
+      <div class="workflow-node">Check role</div>
+      <div class="workflow-branches">
+        <div class="workflow-lane"><div class="workflow-lane-label">ADMINISTRATOR</div>
+          <div class="workflow-node">Register patient</div><div class="workflow-arrow">↓</div>
+          <div class="workflow-node">Add medicine and reminder time</div><div class="workflow-arrow">↓</div>
+          <div class="workflow-node">Reminder due → mark Taken or Missed</div><div class="workflow-arrow">↓</div>
+          <div class="workflow-node">Save to medication history</div><div class="workflow-arrow">↓</div>
+          <div class="workflow-node">Review dashboard and reply to clients</div><div class="workflow-arrow">↓</div>
+          <div class="workflow-node workflow-end">Sign out</div></div>
+        <div class="workflow-lane client-lane"><div class="workflow-lane-label">CLIENT</div>
+          <div class="workflow-node">Browse medicine library</div><div class="workflow-arrow">↓</div>
+          <div class="workflow-node">Send consultation question</div><div class="workflow-arrow">↓</div>
+          <div class="workflow-node">Admin is alerted and reviews</div><div class="workflow-arrow">↓</div>
+          <div class="workflow-node">Read the admin reply</div><div class="workflow-arrow">↓</div>
+          <div class="workflow-node workflow-end">Sign out</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATABASE -->
+  <section class="project-section diagram-section" id="database-erd">
+    <div class="project-section-heading"><span class="section-kicker">13 · DATABASE</span><h2>The data <em>model.</em></h2><p>One shared database serves both the desktop app and this website.</p></div>
+    <div class="erd-relations">
+      <span>patients <b>1 → many</b> medicines</span><span>patients <b>1 → many</b> appointments</span>
+      <span>medicines <b>1 → many</b> medication_history</span><span>users <b>1 → many</b> consultations</span>
+    </div>
+    <div class="erd-grid">
+      <article class="erd-entity"><h3>users</h3><ul><li>username (key)</li><li>full_name</li><li>role</li><li>password (hashed)</li><li>created_at</li></ul></article>
+      <article class="erd-entity"><h3>patients</h3><ul><li>id (key)</li><li>full_name</li><li>age</li><li>contact</li></ul></article>
+      <article class="erd-entity"><h3>medicines</h3><ul><li>id (key)</li><li>patient_id</li><li>medicine_name</li><li>dosage</li><li>reminder_time</li><li>status</li><li>notes</li></ul></article>
+      <article class="erd-entity"><h3>appointments</h3><ul><li>id (key)</li><li>patient_id</li><li>doctor_name</li><li>appointment_date</li></ul></article>
+      <article class="erd-entity"><h3>medication_history</h3><ul><li>id (key)</li><li>medicine_id</li><li>patient_id</li><li>medicine_name</li><li>dosage</li><li>status</li><li>dose_date</li><li>recorded_at</li></ul></article>
+      <article class="erd-entity"><h3>consultations</h3><ul><li>id (key)</li><li>client_username</li><li>medicine_name</li><li>question</li><li>status</li><li>admin_reply</li><li>created_at</li></ul></article>
+    </div>
+    <p class="erd-note">Medication history copies the patient and medicine names, so records stay readable even after a medicine is deleted. Passwords are stored as hashes, never as plain text.</p>
+  </section>
+
+  <section class="closing-cta">
+    <span class="section-kicker">GET STARTED</span>
+    <h2>Ready to try <em>MedRemind Care?</em></h2>
+    <p>Create a client account to browse medicines and ask the care team a question.</p>
+    <div class="cta-actions"><a class="hero-primary" href="{{ url_for('signup') }}">Create an account <span aria-hidden="true">↗</span></a><a class="hero-secondary" href="{{ url_for('login') }}">Sign in</a></div>
+    <span class="cta-decoration" aria-hidden="true">✳</span>
+  </section>
+  <p class="landing-disclaimer">Medicine information is general only and is not a diagnosis or prescription.</p>
+</div>
+{% endblock %}

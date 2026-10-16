@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Admin account created | MedRemind Care{% endblock %}
+{% block content %}
+<section class="card form-card">
+  <h1>Admin account created</h1>
+  <p class="muted">Your credentials are saved in the shared database. Open the MedRemind Care desktop app and sign in with the username and password you just created to manage the dashboard.</p>
+  <p class="muted">This website does not sign admin accounts in as clients.</p>
+  <a class="primary" href="{{ url_for('signup') }}">Go to client signup</a>
+</section>
+{% endblock %}

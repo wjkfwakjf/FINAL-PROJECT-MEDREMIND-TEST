@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Your care space | MedRemind Care{% endblock %}
+{% block content %}
+<div class="client-dashboard">
+  <section class="client-hero" aria-labelledby="client-title">
+    <div class="client-hero-copy">
+      <span class="client-eyebrow"><span class="client-live-dot"></span> YOUR MEDREMIND CARE SPACE</span>
+      <h1 id="client-title">A little more<br><em>in sync.</em></h1>
+      <p>Welcome back, {{ session.get('username') }}. Explore general medicine information and keep your questions in one place.</p>
+      <div class="client-hero-actions">
+        <a class="client-action-primary" href="{{ url_for('consultations') }}">Ask a question <span aria-hidden="true">↗</span></a>
+        <a class="client-action-secondary" href="#medicine-library">Explore medicines <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="client-safety-note"><span aria-hidden="true">✳</span> Helpful information, with your clinician in the loop.</div>
+    </div>
+    <div class="client-hero-art" aria-hidden="true">
+      <div class="client-orbit orbit-large"></div>
+      <div class="client-orbit orbit-small"></div>
+      <div class="client-orb-glow"></div>
+      <div class="care-glass-card">
+        <div class="care-card-top"><span class="logo-crop care-card-logo"><img src="{{ url_for('static', filename='brand/medremind-care-logo.jpg') }}" alt=""></span><span>YOUR CARE OVERVIEW</span><i></i></div>
+        <div class="care-card-title">Your care, in view.</div>
+        <div class="care-card-metrics">
+          <div><span>MEDICINES</span><b>{{ medicines|length }}</b><small>In the library</small></div>
+          <div><span>MY REQUESTS</span><b>{{ consultation_count }}</b><small>Sent by you</small></div>
+        </div>
+        <div class="care-card-progress"><span><i></i></span><b>{{ pending_count }} pending</b></div>
+        <div class="care-card-footer"><span>INFORMATION IS NOT A PRESCRIPTION</span><span>✦</span></div>
+      </div>
+      <span class="client-float-chip"><i></i> Your questions, together</span>
+      <span class="client-star star-one">✳</span>
+      <span class="client-star star-two">✦</span>
+    </div>
+  </section>
+
+  <section class="client-quick-grid" aria-label="Quick actions">
+    <a class="client-quick-card quick-question" href="{{ url_for('consultations') }}">
+      <span class="quick-icon" aria-hidden="true">✉</span>
+      <span class="quick-card-copy"><small>NEED CLARITY?</small><b>Ask about a medicine</b><span>Send a question for the admin to review.</span></span>
+      <span class="quick-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="client-quick-card quick-history" href="{{ url_for('consultations') }}">
+      <span class="quick-icon" aria-hidden="true">◷</span>
+      <span class="quick-card-copy"><small>KEEP TRACK</small><b>Review your requests</b><span>{{ pending_count }} pending · {{ consultation_count }} total</span></span>
+      <span class="quick-arrow" aria-hidden="true">↗</span>
+    </a>
+  </section>
+
+  <section class="medicine-library" id="medicine-library">
+    <div class="library-heading">
+      <div>
+        <span class="client-section-kicker">GENERAL INFORMATION</span>
+        <h2>Medicine library</h2>
+        <p>Browse common uses and examples. Always follow your clinician’s advice and the product label.</p>
+      </div>
+      <label class="medicine-search">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" id="medicine-search" placeholder="Search medicines" aria-label="Search medicines by name, use, brand, or strength">
+        <kbd>/</kbd>
+      </label>
+    </div>
+    <p class="library-count" id="medicine-count" aria-live="polite">{{ medicines|length }} medicines</p>
+    <div class="medicine-grid" id="medicine-grid">
+      {% for name, details in medicines.items() %}
+        <article class="medicine-card" data-search="{{ (name ~ ' ' ~ details['use'] ~ ' ' ~ details['brands'] ~ ' ' ~ details['strengths'])|lower }}">
+          <div class="medicine-card-top">
+            <span class="medicine-icon" aria-hidden="true">{{ "%02d"|format(loop.index) }}</span>
+            <span class="medicine-card-label">MEDICINE GUIDE</span>
+          </div>
+          <h3>{{ name }}</h3>
+          <p class="medicine-use">{{ details["use"] }}</p>
+          <div class="medicine-meta"><span>COMMON BRANDS</span><p>{{ details["brands"] }}</p></div>
+          <div class="medicine-strengths">
+            <span>STRENGTH EXAMPLES</span>
+            <div>
+              {% for strength in details["strengths"].split(",") %}
+                <span class="medicine-strength">{{ strength.strip() }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          <a class="medicine-ask-link" href="{{ url_for('consultations', medicine=name) }}#new-consultation">Ask about this medicine <span aria-hidden="true">↗</span></a>
+        </article>
+      {% endfor %}
+    </div>
+    <p class="medicine-no-results" id="medicine-empty" hidden>No medicines match your search. Try a medicine name, brand, or strength.</p>
+    <p class="medicine-disclaimer">This library is for general information only, not a diagnosis or prescription. Consult a qualified healthcare professional before making treatment decisions.</p>
+  </section>
+</div>
+{% endblock %}
+{% block page_scripts %}
+  <script src="{{ url_for('static', filename='js/catalog.js') }}" defer></script>
+{% endblock %}

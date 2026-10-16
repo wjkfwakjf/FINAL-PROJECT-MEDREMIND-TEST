@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Admin sign in | MedRemind Care{% endblock %}
+{% block content %}
+<div class="auth-shell">
+  <aside class="auth-visual">
+    <span class="eyebrow">Operations overview</span>
+    <h1>Review care activity at a glance.</h1>
+    <p>See new registrations, manage consultation requests, and keep the care workflow moving smoothly.</p>
+    <ul class="benefits">
+      <li>Track new client registrations</li>
+      <li>Review consultation requests</li>
+      <li>Keep care visibility organized</li>
+    </ul>
+  </aside>
+  <section class="auth-panel">
+    <div class="auth-card">
+      <span class="brand-mark"><img src="{{ url_for('static', filename='brand/medremind-care-logo.jpg') }}" alt="MedRemind Care logo"></span>
+      <h2>Admin sign in</h2>
+      <p class="muted">Use your administrator account to review client sign-ups and medicine consultations.</p>
+      <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label for="username">Admin username</label>
+        <input id="username" name="username" required autofocus autocomplete="username" value="{{ request.form.get('username', '') }}">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required autocomplete="current-password">
+        <button class="primary" type="submit">Admin sign in</button>
+      </form>
+      <p class="auth-links">Need an admin account? <a href="{{ url_for('admin_signup') }}">Create one</a></p>
+      <p class="auth-links"><a href="{{ url_for('login') }}">Client sign in</a></p>
+    </div>
+  </section>
+</div>
+{% endblock %}

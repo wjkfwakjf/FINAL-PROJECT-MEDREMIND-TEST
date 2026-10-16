@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block title %}Admin dashboard | MedRemind Care{% endblock %}
+{% block content %}
+<div class="admin-dashboard">
+  <section class="admin-hero" aria-labelledby="admin-title">
+    <div class="admin-hero-copy">
+      <span class="admin-eyebrow"><span class="admin-live-dot"></span> MEDREMIND CARE · OPERATIONS</span>
+      <h1 id="admin-title">A clearer view<br>of care activity.</h1>
+      <p>Welcome back, {{ session.get('username') }}. Your client activity and consultation requests, together in one place.</p>
+      <a class="admin-hero-link" href="#consultation-activity">Review requests <span aria-hidden="true">↓</span></a>
+    </div>
+    <div class="admin-hero-mark" aria-hidden="true">
+      <div class="admin-mark-ring admin-mark-ring-one"></div>
+      <div class="admin-mark-ring admin-mark-ring-two"></div>
+      <div class="admin-mark-core"><span class="logo-crop"><img src="{{ url_for('static', filename='brand/medremind-care-logo.jpg') }}" alt=""></span><small>CARE<br>OVERVIEW</small></div>
+      <span class="admin-mark-orbit orbit-a">01</span>
+      <span class="admin-mark-orbit orbit-b">✳</span>
+    </div>
+    <div class="admin-hero-foot"><span>YOUR WORKSPACE</span><span>SECURE ADMIN VIEW</span></div>
+  </section>
+
+  <section class="admin-metrics" aria-label="Dashboard summary">
+    <article class="admin-metric metric-clients">
+      <span class="metric-icon" aria-hidden="true">◎</span>
+      <div><small>CLIENT ACCOUNTS</small><strong>{{ client_count }}</strong><span>Registered clients</span></div>
+      <span class="metric-corner" aria-hidden="true">↗</span>
+    </article>
+    <article class="admin-metric metric-requests">
+      <span class="metric-icon" aria-hidden="true">✉</span>
+      <div><small>ALL REQUESTS</small><strong>{{ consultations|length }}</strong><span>Consultation requests</span></div>
+      <span class="metric-corner" aria-hidden="true">↗</span>
+    </article>
+    <article class="admin-metric metric-pending">
+      <span class="metric-icon" aria-hidden="true">◷</span>
+      <div><small>NEEDS ATTENTION</small><strong>{{ pending_count }}</strong><span>Pending requests</span></div>
+      <span class="metric-corner" aria-hidden="true">↗</span>
+    </article>
+  </section>
+
+  <section
+    class="admin-live-notice"
+    id="consultation-notice"
+    aria-live="polite"
+    aria-atomic="true"
+    data-notifications-url="{{ url_for('admin_notifications') }}"
+    data-after-id="{{ latest_consultation_id }}"
+    hidden
+  >
+    <span class="admin-live-notice-icon" aria-hidden="true">✉</span>
+    <div>
+      <strong id="consultation-notice-title">New consultation request</strong>
+      <p id="consultation-notice-message"></p>
+    </div>
+    <a href="{{ url_for('admin_dashboard') }}#consultation-activity">View request</a>
+  </section>
+
+  <section class="admin-section" id="consultation-activity">
+    <div class="admin-section-heading">
+      <div>
+        <span class="admin-section-kicker">CLIENT CARE</span>
+        <h2>Consultation requests</h2>
+        <p>New client requests appear here while this dashboard is open.</p>
+      </div>
+      <div class="admin-notification-controls">
+        <span id="notification-connection" class="admin-notification-status">Live alerts on</span>
+        <button type="button" class="admin-text-link" id="enable-browser-notifications">Enable browser alerts</button>
+        <a class="admin-text-link" href="{{ url_for('admin_dashboard') }}">Refresh view <span aria-hidden="true">↻</span></a>
+      </div>
+    </div>
+    <div class="admin-table-panel">
+      <div class="admin-toolbar">
+        <label class="admin-search">
+          <span aria-hidden="true">⌕</span>
+          <input type="search" id="consultation-search" placeholder="Search client, medicine, or question" aria-label="Search consultation requests">
+        </label>
+        <div class="admin-filters" role="group" aria-label="Filter requests by status">
+          <button type="button" class="admin-filter is-active" data-status-filter="all" aria-pressed="true">All <span>{{ consultations|length }}</span></button>
+          <button type="button" class="admin-filter" data-status-filter="pending" aria-pressed="false">Pending <span>{{ pending_count }}</span></button>
+        </div>
+      </div>
+      {% if consultations %}
+        <div class="admin-table-scroll">
+          <table class="admin-table">
+            <thead>
+              <tr><th>CLIENT</th><th>MEDICINE</th><th>QUESTION</th><th>STATUS</th><th>ADMIN REPLY</th><th>SUBMITTED</th></tr>
+            </thead>
+            <tbody id="consultation-rows">
+              {% for item in consultations %}
+                <tr data-status="{{ 'pending' if item['status']|lower|trim == 'pending' else 'other' }}"
+                    data-search="{{ (item['full_name'] ~ ' ' ~ item['client_username'] ~ ' ' ~ item['medicine_name'] ~ ' ' ~ item['question'] ~ ' ' ~ item['status'] ~ ' ' ~ item['admin_reply'])|lower }}">
+                  <td><span class="client-name">{{ item["full_name"] }}</span><small>@{{ item["client_username"] }}</small></td>
+                  <td><span class="medicine-label">{{ item["medicine_name"] }}</span></td>
+                  <td class="admin-question">{{ item["question"] }}</td>
+                  <td><span class="request-status {{ 'is-pending' if item['status']|lower|trim == 'pending' else 'is-other' }}">{{ item["status"] }}</span></td>
+                  <td>{{ item["admin_reply"] or "—" }}</td>
+                  <td class="request-date">{{ item["created_at"] }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p class="admin-no-results" id="consultation-empty" hidden>No requests match this search.</p>
+        </div>
+      {% else %}
+        <div class="admin-empty-state">
+          <span aria-hidden="true">✳</span>
+          <strong>Nothing to review just yet</strong>
+          <p>New client consultation requests will appear here.</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="admin-section accounts-section" id="accounts">
+    <div class="admin-section-heading">
+      <div>
+        <span class="admin-section-kicker">YOUR COMMUNITY</span>
+        <h2>Registered accounts</h2>
+        <p>Browse the accounts using MedRemind Care.</p>
+      </div>
+      <label class="admin-search accounts-search">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" id="account-search" placeholder="Search accounts" aria-label="Search registered accounts">
+      </label>
+    </div>
+    {% if accounts %}
+      <div class="admin-table-panel admin-table-scroll">
+        <table class="admin-table">
+          <thead>
+            <tr><th>NAME</th><th>USERNAME</th><th>ROLE</th><th>JOINED</th><th>ACCOUNT ACTIONS</th></tr>
+          </thead>
+          <tbody id="account-rows">
+            {% for account in accounts %}
+              <tr data-search="{{ (account['full_name'] ~ ' ' ~ account['username'] ~ ' ' ~ account['role'])|lower }}">
+                <td><span class="client-name">{{ account["full_name"] }}</span></td>
+                <td>@{{ account["username"] }}</td>
+                <td><span class="account-role">{{ account["role"] }}</span></td>
+                <td class="request-date">{{ account["created_at"] }}</td>
+                <td>
+                  {% if account["role"] == "Client" %}
+                    <details class="account-reset">
+                      <summary>Reset password</summary>
+                      <form method="post" action="{{ url_for('admin_reset_client_password', username=account['username']) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <label for="password-{{ account['username'] }}">New password</label>
+                        <input id="password-{{ account['username'] }}" name="password" type="password" minlength="8" autocomplete="new-password" required>
+                        <label for="confirm-password-{{ account['username'] }}">Confirm new password</label>
+                        <input id="confirm-password-{{ account['username'] }}" name="confirm_password" type="password" minlength="8" autocomplete="new-password" required>
+                        <button class="account-reset-button" type="submit">Set new password</button>
+                      </form>
+                    </details>
+                  {% else %}
+                    <span class="muted">—</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <p class="admin-no-results" id="account-empty" hidden>No accounts match this search.</p>
+      </div>
+    {% else %}
+      <div class="admin-empty-state">
+        <span aria-hidden="true">◎</span>
+        <strong>No accounts yet</strong>
+        <p>New registrations will appear in this list.</p>
+      </div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
+{% block page_scripts %}
+  <script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+{% endblock %}

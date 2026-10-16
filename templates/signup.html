@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Client sign up | MedRemind Care{% endblock %}
+{% block page_styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+{% endblock %}
+{% block content %}
+<div class="auth-shell signup-page">
+  <aside class="auth-visual">
+    <span class="eyebrow">A calmer way to care</span>
+    <h1>Join the care routine.</h1>
+    <p>Build a clearer view of medicine questions, care details, and the next steps you need to take.</p>
+    <ul class="benefits">
+      <li>Browse a trusted medicine library</li>
+      <li>Send specific consultation questions</li>
+      <li>Stay organized with less stress</li>
+    </ul>
+    <div class="signup-promise"><span aria-hidden="true">✓</span> A thoughtful space for your care journey</div>
+  </aside>
+  <section class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <span class="brand-mark"><img src="{{ url_for('static', filename='brand/medremind-care-logo.jpg') }}" alt=""></span>
+        <span class="auth-brand-name">MedRemind <b>Care</b><small>Your care space</small></span>
+      </div>
+      <span class="eyebrow signup-kicker">CLIENT ACCESS</span>
+      <h2 class="signup-heading">Create your account</h2>
+      <p class="muted signup-intro">Sign up to browse the medicine catalog and send a consultation request.</p>
+      <form class="signup-form" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label for="full_name">Full name</label>
+        <input id="full_name" name="full_name" required autofocus maxlength="120" autocomplete="name" value="{{ request.form.get('full_name', '') }}">
+        <label for="username">Username</label>
+        <input id="username" name="username" required minlength="3" maxlength="60" pattern="[A-Za-z0-9_]+" autocomplete="username" value="{{ request.form.get('username', '') }}">
+        <label for="password">Password</label>
+        <div class="password-field">
+          <input id="password" name="password" type="password" required minlength="8" autocomplete="new-password" aria-describedby="password-hint">
+          <button class="password-toggle" type="button" aria-controls="password" aria-pressed="false">Show</button>
+        </div>
+        <div class="password-meter" id="password-meter" data-strength="0" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <small class="password-hint" id="password-hint" aria-live="polite">Use at least 8 characters.</small>
+        <label for="confirm_password">Confirm password</label>
+        <div class="password-field">
+          <input id="confirm_password" name="confirm_password" type="password" required minlength="8" autocomplete="new-password">
+          <button class="password-toggle" type="button" aria-controls="confirm_password" aria-pressed="false">Show</button>
+        </div>
+        <button class="primary" type="submit">Create account</button>
+      </form>
+      <p class="auth-links">Already registered? <a href="{{ url_for('login') }}">Sign in</a></p>
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block page_scripts %}
+  <script src="{{ url_for('static', filename='js/signup.js') }}" defer></script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Admin sign up | MedRemind Care{% endblock %}
+{% block content %}
+<div class="auth-shell">
+  <aside class="auth-visual">
+    <span class="eyebrow">Secure oversight</span>
+    <h1>Manage care operations with confidence.</h1>
+    <p>Review registrations, evaluate client questions, and keep the care process organized and responsive.</p>
+    <ul class="benefits">
+      <li>Oversee sign-ups in one place</li>
+      <li>Review consultation requests quickly</li>
+      <li>Keep client support coordinated</li>
+    </ul>
+  </aside>
+  <section class="auth-panel">
+    <div class="auth-card">
+      <span class="brand-mark"><img src="{{ url_for('static', filename='brand/medremind-care-logo.jpg') }}" alt="MedRemind Care logo"></span>
+      <h2>Create admin account</h2>
+      <p class="muted">Set up an administrator account to manage client questions and registrations.</p>
+      <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        {% if admin_signup_key_required %}
+        <label for="admin_signup_key">Admin signup key</label>
+        <input id="admin_signup_key" name="admin_signup_key" type="password" required autocomplete="off">
+        {% endif %}
+        <label for="full_name">Full name</label>
+        <input id="full_name" name="full_name" required autofocus maxlength="120" autocomplete="name" value="{{ request.form.get('full_name', '') }}">
+        <label for="username">Username</label>
+        <input id="username" name="username" required minlength="3" maxlength="60" pattern="[A-Za-z0-9_]+" autocomplete="username" value="{{ request.form.get('username', '') }}">
+        <label for="password">Password (at least 8 characters)</label>
+        <input id="password" name="password" type="password" required minlength="8" autocomplete="new-password">
+        <label for="confirm_password">Confirm password</label>
+        <input id="confirm_password" name="confirm_password" type="password" required minlength="8" autocomplete="new-password">
+        <button class="primary" type="submit">Create admin account</button>
+      </form>
+      <p class="auth-links"><a href="{{ url_for('signup') }}">Client sign up</a></p>
+      <p class="auth-links">Already an admin? <a href="{{ url_for('admin_login') }}">Sign in</a></p>
+    </div>
+  </section>
+</div>
+{% endblock %}

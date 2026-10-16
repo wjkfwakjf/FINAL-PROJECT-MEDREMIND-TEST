@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Consult a medicine | MedRemind Care{% endblock %}
+{% block content %}
+<div class="consultation-page">
+  <div class="consultation-heading">
+    <span class="consultation-kicker">MEDREMIND CARE · CLIENT SUPPORT</span>
+    <h1>Ask about a medicine.</h1>
+    <p>Send a question to the care team and keep track of your requests here.</p>
+    <div class="consultation-flow" aria-label="How a consultation works">
+      <span><b>1</b> Choose a medicine</span>
+      <i aria-hidden="true"></i>
+      <span><b>2</b> Write your question</span>
+      <i aria-hidden="true"></i>
+      <span><b>3</b> The admin reviews it</span>
+    </div>
+  </div>
+  <div class="consultation-grid">
+    <section class="card consultation-form-card" id="new-consultation">
+      <div class="consultation-card-heading">
+        <span class="consultation-card-icon" aria-hidden="true">✉</span>
+        <div>
+          <span class="consultation-kicker">NEW MESSAGE</span>
+          <h2>New consultation request</h2>
+          <p>Share one clear question. Your request is only visible to you and the care team.</p>
+        </div>
+      </div>
+      <form method="post" id="consultation-form" data-draft-key="medremind-draft-{{ session.get('username', 'client') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label for="medicine_name">Which medicine?</label>
+        <select id="medicine_name" name="medicine_name" required>
+          <option value="">Choose a medicine</option>
+          {% for name in medicines %}
+            <option value="{{ name }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+        <label for="question">Your question</label>
+        <textarea id="question" name="question" required maxlength="2000" placeholder="What would you like to ask about this medicine?"></textarea>
+        <div class="question-guidance">
+          <span>Do not include private medical record numbers or passwords.</span>
+          <span id="question-count" aria-live="polite">0 / 2,000</span>
+        </div>
+        <button class="primary" type="submit">Send consultation request <span aria-hidden="true">↗</span></button>
+      </form>
+      <aside class="notice consultation-safety">
+        <strong>For your safety</strong>
+        <span>Do not use this form for emergencies. Do not stop, start, or change a medicine based only on website information; check with a qualified healthcare professional.</span>
+      </aside>
+    </section>
+
+    <section class="consultation-history" id="my-requests" aria-labelledby="consultation-history-title">
+      <div class="consultation-history-heading">
+        <span class="consultation-kicker">YOUR ACTIVITY</span>
+        <h2 id="consultation-history-title">Your consultation requests</h2>
+        <p>Requests you have sent from this account.</p>
+      </div>
+      {% if own_consultations %}
+        <div class="consultation-history-list">
+          {% for item in own_consultations %}
+            <article class="card consultation">
+              <div class="consultation-history-top">
+                <strong>{{ item["medicine_name"] }}</strong>
+                <span class="tag">{{ item["status"] }}</span>
+              </div>
+              <p>{{ item["question"] }}</p>
+              {% if item["admin_reply"] %}
+                <div class="consultation-admin-reply">
+                  <strong>Reply from the care team</strong>
+                  <p>{{ item["admin_reply"] }}</p>
+                </div>
+              {% endif %}
+              <small class="muted">Submitted {{ item["created_at"] }}</small>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="consultation-empty">
+          <span aria-hidden="true">✳</span>
+          <strong>Your requests will show up here</strong>
+          <p>You have not submitted any consultation requests yet.</p>
+        </div>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}
+{% block page_scripts %}
+  <script src="{{ url_for('static', filename='js/consultations.js') }}" defer></script>
+{% endblock %}

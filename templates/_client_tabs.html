@@ -1,0 +1,8 @@
+<div class="client-tabs-wrap">
+  <nav class="client-tabs" id="client-tabs" aria-label="Your care space">
+    <a href="{{ url_for('catalog') }}" data-tab="overview"{% if request.endpoint == 'catalog' %} aria-current="page"{% endif %}><span aria-hidden="true">◎</span> Overview</a>
+    <a href="{{ url_for('catalog') }}#medicine-library" data-tab="medicines"><span aria-hidden="true">✚</span> Medicines</a>
+    <a href="{{ url_for('consultations') }}#new-consultation" data-tab="new"{% if request.endpoint == 'consultations' %} aria-current="page"{% endif %}><span aria-hidden="true">✉</span> New consultation</a>
+    <a href="{{ url_for('consultations') }}#my-requests" data-tab="history"><span aria-hidden="true">◷</span> My requests</a>
+  </nav>
+</div>

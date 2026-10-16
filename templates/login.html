@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Client sign in | MedRemind Care{% endblock %}
+{% block content %}
+<div class="auth-shell">
+  <aside class="auth-visual">
+    <span class="eyebrow">Care, in better rhythm</span>
+    <h1>Stay on top of daily care.</h1>
+    <p>Keep medicine routines organized, patient records at hand, and consultation follow-ups easier to manage.</p>
+    <ul class="benefits">
+      <li>Well-organized medicine details</li>
+      <li>Simple daily routine tracking</li>
+      <li>Quick access for follow-up questions</li>
+    </ul>
+  </aside>
+  <section class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <span class="brand-mark"><img src="{{ url_for('static', filename='brand/medremind-care-logo.jpg') }}" alt=""></span>
+        <span class="auth-brand-name">MedRemind <b>Care</b><small>Your care space</small></span>
+      </div>
+      <h2>Client sign in</h2>
+      <p class="muted">Access the medicine catalog and review your consultation requests.</p>
+      <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label for="username">Username</label>
+        <input id="username" name="username" required autofocus autocomplete="username" value="{{ request.form.get('username', '') }}">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required autocomplete="current-password">
+        <button class="primary" type="submit">Sign in</button>
+      </form>
+      <p class="auth-links">Need an account? <a href="{{ url_for('signup') }}">Create one</a></p>
+    </div>
+  </section>
+</div>
+{% endblock %}
