@@ -1,0 +1,11 @@
+MedRemind Care - ready to publish
+
+1. Upload EVERYTHING inside this folder to a new private GitHub repository.
+2. In Railway: New Project -> Deploy from GitHub repo -> choose it. Add a MySQL database.
+3. Website service -> Variables: see HOSTING.md
+4. Website service -> Settings -> Start command:
+   waitress-serve --listen=0.0.0.0:$PORT wsgi:app
+5. Settings -> Networking -> Generate Domain.
+
+Logo: static/brand/medremind-care-logo.jpg is a simple placeholder.
+Replace it with your own MedRemind.jpg (same file name).
